@@ -1,5 +1,5 @@
-﻿using Humanizer;
-using Microsoft.Language.Xml;
+﻿using Microsoft.Language.Xml;
+using Pluralize.NET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,6 +120,7 @@ namespace XmlToCsharpToolkit
 
         private static IEnumerable<string> GenerateCsharpSource(string xmlContent, string @namespace = null, AccessorType accessorType = AccessorType.Public)
         {
+            IPluralize pluralizer = new Pluralizer();
             var result = new List<string>();
             var hasNamespace = !string.IsNullOrEmpty(@namespace);
             var list = Parse(xmlContent, accessorType);
@@ -133,7 +134,7 @@ namespace XmlToCsharpToolkit
                 {
                     if (mem.IsList)
                     {
-                        var plMemName = mem.CsharpName.Pluralize(false);
+                        var plMemName = pluralizer.Pluralize(mem.CsharpName);
                         sb.AppendLine($"{(!hasNamespace ? Tabs(1) : Tabs(2))}{GetAccessor(accessorType)} List<{mem.Type}> {plMemName} {{ get; set; }}");
                     }
                     else
