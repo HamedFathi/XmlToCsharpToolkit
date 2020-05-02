@@ -9,14 +9,18 @@ namespace XmlToCsharpToolkit
 {
     public static class XmlToCsharpConverter
     {
-        private static List<XmlItem> Parse(string xmlContent, AccessorType accessorType)
+        private static IEnumerable<XmlItem> Parse(string xmlContent, AccessorType accessorType)
         {
             var list = new List<XmlItem>();
             var xml = Parser.ParseText(xmlContent);
             foreach (var item in xml.Descendants())
             {
-                var name = item.GetName();
-                var parentName = item.GetParentName();
+                var name = item.NameNode.LocalName;
+                var prefix = item.NameNode.Prefix;
+                var parentName = item.Parent?.NameNode.LocalName;
+                var attrs = item.Attributes;
+                var prefixAttr = item.Attributes.FirstOrDefault(x => x.NameNode.LocalName == prefix);
+                var otherAttrs = item.Attributes.Where(x => x.NameNode.LocalName != prefix);
 
                 if (item.IsLastElement()) // Property
                 {
@@ -25,12 +29,28 @@ namespace XmlToCsharpToolkit
                     var exists = xmlItem.Members.Count(x => x.Name == propName) > 0;
                     if (!exists)
                     {
+                        var attributes = new List<XmlAttribute>();
+                        if (attrs.Count() > 0)
+                        {
+                            foreach (var at in attrs)
+                            {
+                                attributes.Add(new XmlAttribute
+                                {
+                                    Name = at.NameNode.LocalName,
+                                    Prefix = at.NameNode.Prefix,
+                                    Value = at.Value
+                                });
+                            }
+                        }
+
                         xmlItem.Members.Add(new XmlMember()
                         {
                             Name = propName,
                             Type = "string",
                             IsList = false,
-                            Content = item.GetContent()
+                            Content = item.GetContent(),
+                            Prefix = prefix,
+                            Attributes = attributes
                         });
                     }
                 }

@@ -6,9 +6,11 @@ namespace XmlToCsharpToolkit
     {
         public AccessorType AccessorType { get; set; }
         public string Name { get; set; }
+        public string Prefix { get; set; }
         public string ParentName { get; set; }
         public string Content { get; set; }
         public List<XmlMember> Members { get; set; }
+        public List<XmlAttribute> Attributes { get; set; }
 
         public string CsharpName
         {
@@ -27,6 +29,7 @@ namespace XmlToCsharpToolkit
         public XmlItem()
         {
             Members = new List<XmlMember>();
+            Attributes = new List<XmlAttribute>();
         }
     }
 }

@@ -6,6 +6,58 @@ namespace XmlToCsharpToolkit.Sample
 {
     public class XmlSample
     {
+        /* 
+ Licensed under the Apache License, Version 2.0
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+using System;
+using System.Xml.Serialization;
+using System.Collections.Generic;
+namespace Xml2CSharp
+ {
+
+     [XmlRoot(ElementName = "tr", Namespace = "http://www.w3.org/TR/html4/")]
+     public class Tr
+     {
+         [XmlElement(ElementName = "td", Namespace = "http://www.w3.org/TR/html4/")]
+         public List<string> Td { get; set; }
+     }
+
+     [XmlRoot(ElementName = "table", Namespace = "http://www.w3.org/TR/html4/")]
+     public class Table
+     {
+         [XmlElement(ElementName = "tr", Namespace = "http://www.w3.org/TR/html4/")]
+         public Tr Tr { get; set; }
+         [XmlAttribute(AttributeName = "h", Namespace = "http://www.w3.org/2000/xmlns/")]
+         public string H { get; set; }
+     }
+
+     [XmlRoot(ElementName = "table", Namespace = "https://www.w3schools.com/furniture")]
+     public class Table2
+     {
+         [XmlElement(ElementName = "name", Namespace = "https://www.w3schools.com/furniture")]
+         public string Name { get; set; }
+         [XmlElement(ElementName = "width", Namespace = "https://www.w3schools.com/furniture")]
+         public string Width { get; set; }
+         [XmlElement(ElementName = "length", Namespace = "https://www.w3schools.com/furniture")]
+         public string Length { get; set; }
+         [XmlAttribute(AttributeName = "f", Namespace = "http://www.w3.org/2000/xmlns/")]
+         public string F { get; set; }
+     }
+
+     [XmlRoot(ElementName = "root")]
+     public class Root
+     {
+         [XmlElement(ElementName = "table", Namespace = "http://www.w3.org/TR/html4/")]
+         public Table Table { get; set; }
+         [XmlElement(ElementName = "table", Namespace = "https://www.w3schools.com/furniture")]
+         public Table2 Table2 { get; set; }
+     }
+
+ }
+ */
+
         public const string SAMPLE_1 = @"<?xml version=""1.0"" encoding=""UTF-8""?>
             <root>
                <h:table xmlns:h=""http://www.w3.org/TR/html4/"">
